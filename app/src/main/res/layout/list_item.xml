@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1.0"
+        >
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title1"
+            android:layout_weight="1.0"
+            />
+        <TextView
+            android:id="@+id/price1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="price1"
+            android:layout_weight="1.0"
+            />
+        <TextView
+            android:id="@+id/volumn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="volumn1"
+            android:layout_weight="1.0"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1.0"
+        >
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title2"
+            android:layout_weight="1.0"
+            />
+        <TextView
+            android:id="@+id/price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="price2"
+            android:layout_weight="1.0"
+            />
+        <TextView
+            android:id="@+id/volumn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="volumn2"
+            android:layout_weight="1.0"
+            />
+    </LinearLayout>
+</LinearLayout>
