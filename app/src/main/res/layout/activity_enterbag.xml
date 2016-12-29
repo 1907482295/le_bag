@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_enterbag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    tools:context="com.example.lefun.lefun.EnterBagActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:text="输入代码："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:textSize="20sp"
+        />
+    <EditText
+        android:id="@+id/bag_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:background="#FFFFFF"
+        android:inputType="number">
+    </EditText>
+    </LinearLayout>
+    <Button android:id="@+id/viewBag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickViewBag"
+        android:text="确定" />
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.example.lefun.lefun;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,8 +25,6 @@ import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,40 +36,53 @@ public class MainActivity extends Activity {
     MyAdapter adapter;
     final static String BUY = "买";
     final static String SELL = "卖";
+    final static String LOADING = "正在载入...";
+    String number;
+    private TextView viewInfo;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = this.getIntent();
+        number = intent.getStringExtra(Constant.BAGNUMBER);
         lv = (ListView)findViewById(R.id.lv);
+        viewInfo = (TextView)findViewById(R.id.info);
         //获取将要绑定的数据设置到data中
         adapter = new MyAdapter(this);
         lv.setAdapter(adapter);
-        new SearchTwitterTask().execute("002200");
+        viewInfo.setText(LOADING);
+        new SearchTwitterTask().execute(number);
+    }
+    @Override
+    public void onDestroy(){
+        handler.removeMessages(0);
+        super.onDestroy();
     }
 
-    private List<Map<String, Object>> getData()
-    {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map;
-        for(int i=0;i<10;i++)
-        {
-            map = new HashMap<String, Object>();
-            map.put("title1", "title1");
-            map.put("price1", "price1");
-            map.put("volumn1", "volumn1");
-            map.put("title2", "title1");
-            map.put("price2", "price1");
-            map.put("volumn2", "volumn1");
-            list.add(map);
-        }
-        return list;
-    }
+//    private List<Map<String, Object>> getData()
+//    {
+//        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//        Map<String, Object> map;
+//        for(int i=0;i<10;i++)
+//        {
+//            map = new HashMap<String, Object>();
+//            map.put("title1", "title1");
+//            map.put("price1", "price1");
+//            map.put("volumn1", "volumn1");
+//            map.put("title2", "title1");
+//            map.put("price2", "price1");
+//            map.put("volumn2", "volumn1");
+//            list.add(map);
+//        }
+//        return list;
+//    }
 
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             // 要做的事情
             super.handleMessage(msg);
-            new SearchTwitterTask().execute("002200");
+            viewInfo.setText(LOADING);
+            new SearchTwitterTask().execute(number);
         }
     };
     class SearchTwitterTask extends AsyncTask<String, Integer, String> {
@@ -99,11 +112,17 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             try {
-                showData(result);
+                if(result != null) {
+                    showData(result);
+                    viewInfo.setText("");
+                } else {
+                    viewInfo.setText("json result is null");
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
+                viewInfo.setText(e.getMessage());
             }
-            handler.sendEmptyMessageDelayed(0,1000);
+            handler.sendEmptyMessageDelayed(0,100);
         }
 
     }
@@ -120,6 +139,7 @@ public class MainActivity extends Activity {
         public TextView title2;
         public TextView price2;
         public TextView volumn2;
+        public ImageView divider;
     }
     public class MyAdapter extends BaseAdapter {
 
@@ -168,13 +188,18 @@ public class MainActivity extends Activity {
                 holder.title2 = (TextView) convertView.findViewById(R.id.title2);
                 holder.price2 = (TextView) convertView.findViewById(R.id.price2);
                 holder.volumn2 = (TextView) convertView.findViewById(R.id.volumn2);
+                holder.divider=(ImageView)convertView.findViewById(R.id.divider);
                 //将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-
+            if(position == 4){
+                holder.divider.setVisibility(View.VISIBLE);
+            }else{
+                holder.divider.setVisibility(View.GONE);
+            }
             if(position <= 4) {
                 int first = 5-position;
                 holder.title1.setText(SELL+String.valueOf(first));

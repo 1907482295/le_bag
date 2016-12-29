@@ -1,64 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1.0"
-        >
-        <TextView
-            android:id="@+id/title1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="title1"
-            android:layout_weight="1.0"
-            />
-        <TextView
-            android:id="@+id/price1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="price1"
-            android:layout_weight="1.0"
-            />
-        <TextView
-            android:id="@+id/volumn1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="volumn1"
-            android:layout_weight="1.0"
-            />
-    </LinearLayout>
+        android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1.0"
-        >
-        <TextView
-            android:id="@+id/title2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="title2"
             android:layout_weight="1.0"
-            />
-        <TextView
-            android:id="@+id/price2"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="title1"
+                android:textColor="@color/colorBuySaleTitle"
+                android:textSize="@dimen/my_text_size" />
+
+            <TextView
+                android:id="@+id/price1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="price1"
+                android:textColor="@color/colorPrice"
+                android:textSize="@dimen/my_text_size" />
+
+            <TextView
+                android:id="@+id/volumn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="volumn1"
+                android:textColor="@color/colorVol"
+                android:textSize="@dimen/my_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="price2"
             android:layout_weight="1.0"
-            />
-        <TextView
-            android:id="@+id/volumn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="volumn2"
-            android:layout_weight="1.0"
-            />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="title2"
+                android:textColor="@color/colorBuySaleTitle"
+                android:textSize="@dimen/my_text_size" />
+
+            <TextView
+                android:id="@+id/price2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="price2"
+                android:textColor="@color/colorPrice"
+                android:textSize="@dimen/my_text_size" />
+
+            <TextView
+                android:id="@+id/volumn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="volumn2"
+                android:textColor="@color/colorVol"
+                android:textSize="@dimen/my_text_size" />
+        </LinearLayout>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ffffff"
+        />
 </LinearLayout>
