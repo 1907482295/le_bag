@@ -27,16 +27,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
-
 public class MainActivity extends Activity {
 
     private ListView lv;
     private List<Map<String, Object>> data;
     private Bag mBag;
+    private Bag mPreBag;
     MyAdapter adapter;
     final static String BUY = "买";
     final static String SELL = "卖";
     final static String LOADING = "正在载入...";
+    final static String UP = "↑";
+    final static String DOWN = "↓";
     String number;
     private TextView viewInfo;
     @Override
@@ -128,6 +130,7 @@ public class MainActivity extends Activity {
     }
 
     private void showData(String json) throws JSONException {
+        mPreBag = mBag;
         mBag= new Gson().fromJson(json, Bag.class);
         adapter.notifyDataSetChanged();
     }
@@ -201,34 +204,80 @@ public class MainActivity extends Activity {
                 holder.divider.setVisibility(View.GONE);
             }
             if(position <= 4) {
-                int first = 5-position;
-                holder.title1.setText(SELL+String.valueOf(first));
-                if(mBag.data.sellPankou!=null && mBag.data.sellPankou.length > first) {
-                    holder.price1.setText(String.valueOf(mBag.data.sellPankou[first].price));
-                    holder.volumn1.setText(String.valueOf(mBag.data.sellPankou[first].volume));
+                int first = 4-position;
+                holder.title1.setText(SELL+String.valueOf(first+1));
+                if(checkValid(mBag, false,first)){
+                    if(checkValid(mPreBag, false,first)) {
+                        setDataView(holder.price1, mBag.data.sellPankou[first].price, mPreBag.data.sellPankou[first].price);
+                        setDataView(holder.volumn1, mBag.data.sellPankou[first].volume, mPreBag.data.sellPankou[first].volume);
+                    } else {
+                        setDataView(holder.price1, mBag.data.sellPankou[first].price, -1);
+                        setDataView(holder.volumn1, mBag.data.sellPankou[first].volume, -1);
+                    }
                 }
                 int second = first + 5;
-                holder.title2.setText(SELL+String.valueOf(second));
-                if(mBag.data.sellPankou!=null && mBag.data.sellPankou.length > second) {
-                    holder.price2.setText(String.valueOf(mBag.data.sellPankou[second].price));
-                    holder.volumn2.setText(String.valueOf(mBag.data.sellPankou[second].volume));
+                holder.title2.setText(SELL+String.valueOf(second+1));
+                if(checkValid(mBag, false,second)){
+                    if(checkValid(mPreBag, false,second)) {
+                        setDataView(holder.price2, mBag.data.sellPankou[second].price, mPreBag.data.sellPankou[second].price);
+                        setDataView(holder.volumn2, mBag.data.sellPankou[second].volume, mPreBag.data.sellPankou[second].volume);
+                    } else {
+                        setDataView(holder.price2, mBag.data.sellPankou[second].price, -1);
+                        setDataView(holder.volumn2, mBag.data.sellPankou[second].volume, -1);
+                    }
                 }
             } else {
-                int first = position-4;
-                holder.title1.setText(BUY+String.valueOf(first));
-                if(mBag.data.buyPankou!=null && mBag.data.buyPankou.length > first) {
-                    holder.price1.setText(String.valueOf(mBag.data.buyPankou[first].price));
-                    holder.volumn1.setText(String.valueOf(mBag.data.buyPankou[first].volume));
+                int first = position-5;
+                holder.title1.setText(BUY+String.valueOf(first+1));
+                if(checkValid(mBag, true,first)){
+                    if(checkValid(mPreBag, true,first)) {
+                        setDataView(holder.price1, mBag.data.buyPankou[first].price, mPreBag.data.buyPankou[first].price);
+                        setDataView(holder.volumn1, mBag.data.buyPankou[first].volume, mPreBag.data.buyPankou[first].volume);
+                    } else {
+                        setDataView(holder.price1, mBag.data.buyPankou[first].price, -1);
+                        setDataView(holder.volumn1, mBag.data.buyPankou[first].volume, -1);
+                    }
                 }
                 int second = first + 5;
-                holder.title2.setText(BUY+String.valueOf(second));
-                if(mBag.data.buyPankou!=null && mBag.data.buyPankou.length > second) {
-                    holder.price2.setText(String.valueOf(mBag.data.buyPankou[second].price));
-                    holder.volumn2.setText(String.valueOf(mBag.data.buyPankou[second].volume));
+                holder.title2.setText(BUY+String.valueOf(second+1));
+                if(checkValid(mBag, true,second)){
+                    if(checkValid(mPreBag, true,second)) {
+                        setDataView(holder.price2, mBag.data.buyPankou[second].price, mPreBag.data.buyPankou[second].price);
+                        setDataView(holder.volumn2, mBag.data.buyPankou[second].volume, mPreBag.data.buyPankou[second].volume);
+                    } else {
+                        setDataView(holder.price2, mBag.data.buyPankou[second].price, -1);
+                        setDataView(holder.volumn2, mBag.data.buyPankou[second].volume, -1);
+                    }
                 }
             }
 
             return convertView;
+        }
+
+        public boolean checkValid(Bag bag, boolean isBuy,int index){
+            if(bag != null && bag.data != null) {
+                if(isBuy){
+                    if(bag.data.buyPankou!= null && bag.data.buyPankou.length > index) {
+                        return true;
+                    }
+                } else {
+                    if(bag.data.sellPankou!= null && bag.data.sellPankou.length > index) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        public void setDataView(TextView view, double data, double predata) {
+            if(predata < 0) {
+                view.setText(String.valueOf(data));
+            }else if(data > predata) {
+                view.setText(String.valueOf(data) + UP);
+            } else if(data < predata) {
+                view.setText(String.valueOf(data) + DOWN);
+            } else {
+                view.setText(String.valueOf(data));
+            }
         }
 
     }
